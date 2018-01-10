@@ -1,0 +1,12 @@
+[Unit]
+Description=Knock Knock Server
+After=syslog.target network.target remote-fs.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/java -Djava.net.preferIPv4Stack=true -jar /usr/local/bin/ec2_knock_knock.jar 19181 /will/not/guess/me /me/either sg-ffffff
+Restart=on-failure
+LimitNOFILE=10000
+
+[Install]
+WantedBy=multi-user.target
