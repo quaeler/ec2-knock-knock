@@ -4,7 +4,7 @@ After=syslog.target network.target remote-fs.target
 
 [Service]
 Type=simple
-ExecStart=/usr/bin/java -Djava.net.preferIPv4Stack=true -jar /usr/local/bin/ec2_knock_knock.jar 19181 /will/not/guess/me /me/either sg-ffffff
+ExecStart=/usr/bin/java -Djava.net.preferIPv4Stack=true -jar /usr/local/bin/ec2_knock_knock.jar -listenPort 15551 -ingressPort 24 -dbFile /usr/local/etc/ec2kkdb -sgId sg-ffffffff -url /will/not/guess/me
 Restart=on-failure
 LimitNOFILE=10000
 
