@@ -22,6 +22,8 @@ import org.slf4j.LoggerFactory;
  * This is both a DAO and a tender to the session expirations; were we writing this with abstraction in
  * 	heart, we'd separate out the specific backing store mechanisms and keep this pluggable. As i'm content
  * 	at this pass to tightly couple to H2 + Hibernate, consider that a FUTURISM.
+ *
+ * TODO: Unit tests for this class.
  */
 class PersistenceStoreTender {
 
@@ -30,17 +32,17 @@ class PersistenceStoreTender {
 	static private final Logger LOGGER = LoggerFactory.getLogger(PersistenceStoreTender.class);
 
 	static private final String EXPIRATION_QUERY
-				= "FROM IngressSession"
-				  	+ " WHERE (revocationDate IS NULL)"
-				  			+ " AND (expirationDate < CURRENT_TIMESTAMP())";
+								= "FROM IngressSession"
+									+ " WHERE (revocationDate IS NULL)"
+											+ " AND (expirationDate < CURRENT_TIMESTAMP())";
 	static private final String OPEN_FOR_IP_QUERY
-				= "FROM IngressSession"
-				  	+ " WHERE (revocationDate IS NULL)"
-				  			+ " AND (ipAddress = :ipAddress)";
+								= "FROM IngressSession"
+									+ " WHERE (revocationDate IS NULL)"
+											+ " AND (ipAddress = :ipAddress)";
 	static private final String REVOCATION_UPDATE
-				= "UPDATE IngressSession"
-					+ " SET revocationDate = :revokeDateTime"
-					+ " WHERE id = :rowId";
+								= "UPDATE IngressSession"
+									+ " SET revocationDate = :revokeDateTime"
+									+ " WHERE id = :rowId";
 
 
 	final RevocationHelper revocationHelper;
@@ -150,6 +152,9 @@ class PersistenceStoreTender {
 		}
 	}
 
+	/*
+	 * Creates a new open session for the associated ip address in the backing store.
+	 */
 	Date storeSuccessfulAuthorization (String address) {
 		final Session s = this.sessionFactory.openSession();
 		final Date now = new Date();
@@ -180,6 +185,10 @@ class PersistenceStoreTender {
 		}
 	}
 
+	/*
+	 * Marks the (hopefully singular) open session for the associated ip address as a revoked session in the backing
+	 * 	store.
+	 */
 	void storeSuccessfulRevocation (String address) {
 		final Session s = this.sessionFactory.openSession();
 		Transaction t = null;
@@ -236,6 +245,13 @@ class PersistenceStoreTender {
 	}
 
 
+	/*
+	 * Simple runnable expected to be executed in a daemon thread; will sleep, periodically checking for expired
+	 * 	sessions and revoking them when found.
+	 *
+	 * Roughly once per minute (or longer should the RUNNABLE_SLEEP period be changed to be longer than a minute,)
+	 * 	the number of total and open sessions will be logged at INFO level.
+	 */
 	protected class ExpirationRunnable
 			implements Runnable {
 
