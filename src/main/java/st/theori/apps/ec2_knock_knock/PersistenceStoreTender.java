@@ -238,10 +238,18 @@ class PersistenceStoreTender {
 	List<IngressSession> getExpiredOpenSessions () {
 		final Session s = this.sessionFactory.openSession();
 		final Query<IngressSession> q = s.createQuery(EXPIRATION_QUERY, IngressSession.class);
+		final List<IngressSession> rhett;
 
-		s.beginTransaction();
+		try {
+			s.beginTransaction();
 
-		return q.list();
+			rhett = q.list();
+		}
+		finally {
+			s.close();
+		}
+
+		return rhett;
 	}
 
 

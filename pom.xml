@@ -6,7 +6,7 @@
 
     <groupId>st.theori</groupId>
     <artifactId>ec2-knock-knock</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>0.9.5-SNAPSHOT</version>
 
     <dependencies>
 
