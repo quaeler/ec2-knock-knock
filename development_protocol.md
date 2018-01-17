@@ -15,13 +15,13 @@ Prior to starting the project, i was aware that Amazon offered command line func
 
 ### act one
 
-My first iterations are near-ubiquitously a quickly produced, pixelated, satisfaction of minimal needs without devotion to niceties (where niceties include configurability, robust failure handling, spacetime optimizations, etc.)
+My first iterations are near-ubiquitously a quickly produced, pixelated, satisfaction of minimal needs (hopefully) without devotion to niceties (where niceties include configurability, robust failure handling, spacetime optimizations, etc.)
 
-This 'burstiness' always appears apropos in creation, whether due to someone presenting me with an emergency, or being in a fixed time interview, or initial cogitation having created a crystalline compact form ready for production, or &hellip;
+This 'burstiness' always appears apropos in creation - whether due to someone presenting me with an emergency, or being in a fixed time interview, or initial cogitation having created a crystalline compact form ready for production, or &hellip;
 
 As a basic knock-knock server is a pretty simple idea, the largest facet to the first iteration was performing the Seth-Brundle-in-*The Fly* task of largely piecing together chunks of functionality that other people had written. I needed a simple way to receive and act upon HTTP requests (Spark) and i needed a way to affect my EC2 configuration (Amazon's SDK;) so, I Googled for POM assets and API docs and set out to do it.
 
-Circa seven work hours later, the project was created and [the initial iteration](https://github.com/quaeler/ec2-knock-knock/releases/tag/v0.8) was QC'd & deployed to my EC2 instance.<sup>[1](#footnotes)</sup>
+Circa seven work hours later, the project was created and [the initial iteration](https://github.com/quaeler/ec2-knock-knock/releases/tag/v0.8) was QC'd & deployed to my EC2 instance. <sup>[1](#footnotes)</sup>
 
 ### intermission
 
@@ -37,8 +37,11 @@ On the day following that, i gathered a mental image of how i would affect the c
 
 I'm not designing for a heavy transaction load, and am much more concerned with a single jar with no external dependencies while still supporting a backing store to allow for session tracking persistence, so i chose H2 as the backing store and Hibernate as the ORM. For the command line parsing, i chose to use commons as it has always been reliable for me in the past.
 
-With these things in mind, and the mental picture fixed, i set out to commit it to code. Circa twelve work hours later, [the second iteration](https://github.com/quaeler/ec2-knock-knock/releases/tag/v0.9)<sup>[2](#footnotes)</sup> was QC'd and deployed to my EC2 instance.
+With these things in mind, and the mental picture fixed, i set out to commit it to code. Circa twelve work hours later, [the second iteration](https://github.com/quaeler/ec2-knock-knock/releases/tag/v0.9) <sup>[2](#footnotes)</sup> was QC'd and deployed to my EC2 instance.
 
+### intermission
+
+From a protocol perspective, i'm presently in gaze phase&hellip; that being written, i have implemented beyond what i personally need in a solution and, short of dotting-the-i's with some unit tests, i don't imagine i will do much more for a third iteration unless an unforeseen compelling use case arrives to my doorstep.
 
 ***
 
