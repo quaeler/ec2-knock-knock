@@ -218,7 +218,7 @@ public final class Maine {
 																					.withFromPort(ingressPort)
 																					.withToPort(ingressPort)
 																					.withCidrIp(address + CIDR_SUFFIX)
-																					.withIpProtocol("tcp");
+																					.withIpProtocol(PROTOCOL);
 
 				try {
 					final AuthorizeSecurityGroupIngressResult result = ec2.authorizeSecurityGroupIngress(authorizeRequest);
